@@ -1,0 +1,24 @@
+{
+  "name": "mfc-store",
+  "version": "1.0.0",
+  "description": "E-commerce website for selling dental products and tools to dentists and clinics.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/abdullahalshawafi/MFC-Store.git"
+  },
+  "author": "Abdullah Adel Alshawafi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdullahalshawafi/MFC-Store/issues"
+  },
+  "homepage": "https://github.com/abdullahalshawafi/MFC-Store#readme",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
