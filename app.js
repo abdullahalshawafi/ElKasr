@@ -37,22 +37,22 @@ app.use(session({
 }));
 
 //express-validator middleware
-app.use(expressValidator({
-    errorFormatter: (param, msg, value) => {
-        const namespace = param.split('.'),
-            root = namespace.shift(),
-            formParam = root;
+// app.use(expressValidator({
+//     errorFormatter: function (param, msg, value) {
+//         var namespace = param.split('.')
+//             , root = namespace.shift()
+//             , formParam = root;
 
-        while (namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param: formParam,
-            msg: msg,
-            value: value
-        };
-    }
-}));
+//         while (namespace.length) {
+//             formParam += '[' + namespace.shift() + ']';
+//         }
+//         return {
+//             param: formParam,
+//             msg: msg,
+//             value: value
+//         };
+//     }
+// }));
 
 //express-messages middleware
 app.use(require('connect-flash')());
