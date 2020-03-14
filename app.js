@@ -7,7 +7,7 @@ const session = require('express-session');
 const expressValidator = require('express-validator');
 
 //connecting to db
-mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -24,6 +24,9 @@ app.set('view engine', 'ejs');
 //public folder setup
 app.use(express.static(path.join(__dirname, 'public')));
 
+//global errors variable setup
+app.locals.errors = null;
+
 //body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -31,28 +34,28 @@ app.use(bodyParser.json());
 //express-session middleware
 app.use(session({
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { secure: true }
+    //cookie: { secure: true }
 }));
 
 //express-validator middleware
-// app.use(expressValidator({
-//     errorFormatter: function (param, msg, value) {
-//         var namespace = param.split('.')
-//             , root = namespace.shift()
-//             , formParam = root;
+app.use(expressValidator({
+    errorFormatter: function (param, msg, value) {
+        var namespace = param.split('.')
+            , root = namespace.shift()
+            , formParam = root;
 
-//         while (namespace.length) {
-//             formParam += '[' + namespace.shift() + ']';
-//         }
-//         return {
-//             param: formParam,
-//             msg: msg,
-//             value: value
-//         };
-//     }
-// }));
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
 
 //express-messages middleware
 app.use(require('connect-flash')());
