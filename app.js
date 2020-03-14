@@ -67,8 +67,10 @@ app.use(function (req, res, next) {
 //set routes
 const pages = require("./routes/pages");
 const adminPages = require("./routes/adminPages");
+const adminCategories = require("./routes/adminCategories");
 
 app.use('/admin/pages', adminPages);
+app.use('/admin/categories', adminCategories);
 app.use('/', pages);
 
 //starting the server

@@ -9,6 +9,7 @@ const Page = require('../models/page');
  */
 router.get('/', (req, res) => {
     Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {
+        if (err) return console.log(err);
         res.render('admin/pages', {
             pages: pages
         });
@@ -33,8 +34,8 @@ router.get('/add-page', (req, res) => {
 /*
  * GET edit page
  */
-router.get('/edit-page/:slug', (req, res) => {
-    Page.findOne({ slug: req.params.slug }, (err, page) => {
+router.get('/edit-page/:id', (req, res) => {
+    Page.findById(req.params.id, (err, page) => {
         if (err) return console.log(err);
         res.render('admin/edit_pages', {
             title: page.title,
@@ -119,8 +120,6 @@ router.post('/reorder-page', (req, res) => {
                 page.sorting = count;
                 page.save(err => {
                     if (err) return console.log(err);
-                    req.flash('success', 'Page deleted!');
-                    res.redirect('/admin/pages/edit-page/' + page.slug);
                 });
             });
         })(count);
@@ -130,7 +129,7 @@ router.post('/reorder-page', (req, res) => {
 /*
  * POST edit page
  */
-router.post('/edit-page/:slug', (req, res) => {
+router.post('/edit-page/:id', (req, res) => {
     req.checkBody('title', 'Title must have a value.').notEmpty();
     req.checkBody('content', 'Content must have a value.').notEmpty();
 
@@ -139,7 +138,7 @@ router.post('/edit-page/:slug', (req, res) => {
     if (slug === "")
         slug = title.replace(/\s+/g, '-').toLowerCase();
     const content = req.body.content;
-    const id = req.body.id;
+    const id = req.params.id;
 
     const errors = req.validationErrors();
     if (errors) {
@@ -171,7 +170,7 @@ router.post('/edit-page/:slug', (req, res) => {
                     page.save(err => {
                         if (err) return console.log(err);
                         req.flash('success', 'Page edited!');
-                        res.redirect('/admin/pages/edit-page/' + page.slug);
+                        res.redirect('/admin/pages/edit-page/' + id);
                     });
                 });
             }

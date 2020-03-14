@@ -4,7 +4,7 @@
 <a href="/admin/pages" class="btn btn-primary">Back to all pages</a>
 <br><br>
 
-<form action="/admin/pages/edit-page/<%= slug %>" method="post">
+<form action="/admin/pages/edit-page/<%= id %>" method="post">
     <div class="form-group">
         <label for="">Title</label>
         <input class="form-control" type="text" name="title" value="<%= title %>" placeholder="Title"
@@ -19,7 +19,6 @@
         <textarea class="form-control" id="ta" name="content" cols="30" rows="10"
             placeholder="Content"><%= content %></textarea>
     </div>
-    <input type="hidden" name="id" value="<%= id %>">
     <button class="btn btn-warning">Submit</button>
 </form>
 <%- include('../layouts/adminfooter')%>
