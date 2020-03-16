@@ -28,6 +28,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //global errors variable setup
 app.locals.errors = null;
 
+//get page model
+const Page = require('./models/page');
+
+//get all pages
+Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {
+    if (err) return console.log(err);
+    app.locals.pages = pages;
+});
+
 //body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
