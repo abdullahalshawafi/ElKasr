@@ -1,0 +1,64 @@
+<%- include('../layouts/adminheader')%>
+<br>
+<h2 class="page-title">Add a product</h2>
+<a href="/admin/products" class="btn btn-primary">Back to all products</a>
+<br><br>
+
+<form action="/admin/products/add-product" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="">Title</label>
+        <input class="form-control" type="text" name="title" value="<%= title %>" placeholder="Title"
+            autocomplete="off">
+    </div>
+    <div class="form-group">
+        <label for="">Description</label>
+        <textarea class="form-control" name="description" cols="30" rows="10"
+            placeholder="Description"><%= description %></textarea>
+    </div>
+    <div class="form-group">
+        <label for="">Category</label>
+        <select name="category" class="form-control">
+            <option value="none">None</option>
+            <% categories.forEach(category => { %>
+            <option value="<%= category.slug %>"><%= category.title %></option>
+            <% }); %>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="">Price</label>
+        <input class="form-control" type="text" name="price" value="<%= price %>" placeholder="Price"
+            autocomplete="off">
+    </div>
+    <div class="form-group">
+        <label for="">Image</label>
+        <input class="form-control" type="file" name="image" id="img" style="height: fit-content;">
+        <div class="imgPreview">
+            <img src="#" id="imagePreview" style="display: none;">
+            <span id="default-text" style="display: block;">Image Preview</span>
+        </div>
+    </div>
+    <button class="btn btn-warning">Submit</button>
+</form>
+<script>
+    function readURL(input) {
+        console.log(input.files);
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                $("#default-text").attr('style', 'display: none;')
+                $("#imagePreview").attr('src', e.target.result).height(10);
+                $("#imagePreview").attr('style', 'display: block;');
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            $("#default-text").attr('style', null);
+            $("#imagePreview").attr('src', '#')
+            $("#imagePreview").attr('style', null);
+        }
+    }
+
+    $("#img").change(function () {
+        readURL(this);
+    });
+</script>
+<%- include('../layouts/adminfooter')%>

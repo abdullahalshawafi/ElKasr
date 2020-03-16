@@ -1,7 +1,37 @@
+.form-group label {
+    font: bold;
+}
 .sorting tr:not(.home) {
     cursor: pointer;
 }
 
 .ui-state-highlight {
     border: 1px dashed #ccc;
+}
+
+.imgPreview {
+    width: 150px;
+    border: 1px solid #dddddd;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cccccc;
+}
+
+#imagePreview {
+    width: 100%;
+}
+
+.gallery {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+ul.gallery li {
+    margin: 20px;
+    display: inline-block;
+    list-style: none;
 }

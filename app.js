@@ -5,6 +5,7 @@ const config = require("./config/database");
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const fileUpload = require("express-fileupload");
 
 //connecting to db
 mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
@@ -31,6 +32,9 @@ app.locals.errors = null;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//express-fileupload middleware
+app.use(fileUpload());
+
 //express-session middleware
 app.use(session({
     secret: 'keyboard cat',
@@ -54,6 +58,24 @@ app.use(expressValidator({
             msg: msg,
             value: value
         };
+    },
+
+    customValidators: {
+        isImage: (value, filename) => {
+            const extension = (path.extname(filename)).toLowerCase();
+            switch (extension) {
+                case '.jpg':
+                    return '.jpg';
+                case '.jpeg':
+                    return '.jpeg';
+                case '.png':
+                    return '.png';
+                case '':
+                    return '.jpg';
+                default:
+                    return false;
+            }
+        }
     }
 }));
 
@@ -68,9 +90,11 @@ app.use(function (req, res, next) {
 const pages = require("./routes/pages");
 const adminPages = require("./routes/adminPages");
 const adminCategories = require("./routes/adminCategories");
+const adminProducts = require("./routes/adminProducts");
 
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
+app.use('/admin/products', adminProducts);
 app.use('/', pages);
 
 //starting the server
