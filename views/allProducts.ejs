@@ -1,7 +1,8 @@
 <%- include('layouts/header')%>
 <br>
-<div class="row products">
 
+<div class="row products">
+    <% if (products.length) { %>
     <% products.forEach(product => { %>
     <div class="col-xs-12 col-md-4 p">
         <a href="/products/<%= product.category %>/<%= product.slug %>" class="pa">
@@ -9,9 +10,15 @@
         </a>
         <h4><%= product.title %></h4>
         <h5><%= parseFloat(product.price).toFixed(2) %> EGP</h5>
-        <a href="/products/<%= product.category %>/<%= product.slug %>" class="vd">View details</a>
+        <a href="/products/<%= product.category %>/<%= product.slug %>" class="vd">View details</a><br>
+        <a href="/cart/add/<%= product.slug %>">Add to cart</a>
     </div>
     <% }); %>
 
+    <% } else { %>
+    <div class="col-xs-12 col-md-12">
+        <h3 class="text-center np">There are no products</h3>
+    </div>
+    <% } %>
 </div>
 <%- include('layouts/footer')%>

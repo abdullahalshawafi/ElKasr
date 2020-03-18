@@ -107,14 +107,21 @@ app.use(function (req, res, next) {
 //set routes
 const pages = require("./routes/pages");
 const products = require("./routes/products");
+const cart = require("./routes/cart");
 const adminPages = require("./routes/adminPages");
 const adminCategories = require("./routes/adminCategories");
 const adminProducts = require("./routes/adminProducts");
+
+app.get('*', (req, res, next) => {
+    res.locals.cart = req.session.cart;
+    next();
+});
 
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
 app.use('/products', products);
+app.use('/cart', cart);
 app.use('/', pages);
 
 //starting the server

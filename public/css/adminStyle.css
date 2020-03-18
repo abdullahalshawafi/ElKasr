@@ -32,3 +32,7 @@ ul.gallery li {
     display: inline-block;
     list-style: none;
 }
+
+table.algin-middle td {
+    vertical-align: middle !important;
+}

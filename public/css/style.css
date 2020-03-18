@@ -4,7 +4,7 @@ img.pimage {
 
 a.pa {
     display: inline-block;
-    height: 130px;
+    height: 155px;
 }
 
 .row .products .p {
@@ -17,9 +17,6 @@ img.spi {
 }
 
 .gallery {
-    /* display: flex;
-    align-items: center;
-    flex-wrap: wrap; */
     margin-left: -35px;
 }
 
@@ -28,4 +25,19 @@ ul.gallery li {
     display: inline-block;
     list-style: none;
 }
+
+.np {
+    justify-content: center;
+    align-items: center;
+}
+
+img.cpi {
+    width: 100px;
+}
+
+table.algin-middle td {
+    vertical-align: middle !important;
+}
+
+
 
