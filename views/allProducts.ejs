@@ -1,0 +1,17 @@
+<%- include('layouts/header')%>
+<br>
+<div class="row products">
+
+    <% products.forEach(product => { %>
+    <div class="col-xs-12 col-md-4 p">
+        <a href="/products/<%= product.category %>/<%= product.slug %>" class="pa">
+            <img src="/products images/<%= product.id %>/<%= product.image %>" class="pimage">
+        </a>
+        <h4><%= product.title %></h4>
+        <h5><%= parseFloat(product.price).toFixed(2) %> EGP</h5>
+        <a href="/products/<%= product.category %>/<%= product.slug %>" class="vd">View details</a>
+    </div>
+    <% }); %>
+
+</div>
+<%- include('layouts/footer')%>

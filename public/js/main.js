@@ -6,4 +6,7 @@ $(() => {
         if (!confirm('Are you sure you want to delete this page?')) return false;
     });
 
+    if ($("[data-fancybox]").length) {
+        $("[data-fancybox]").fancybox();
+    }
 });

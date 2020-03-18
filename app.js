@@ -37,6 +37,15 @@ Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {
     app.locals.pages = pages;
 });
 
+//get category model
+const Category = require('./models/category');
+
+//get all categories
+Category.find((err, categories) => {
+    if (err) return console.log(err);
+    app.locals.categories = categories;
+});
+
 //body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -97,6 +106,7 @@ app.use(function (req, res, next) {
 
 //set routes
 const pages = require("./routes/pages");
+const products = require("./routes/products");
 const adminPages = require("./routes/adminPages");
 const adminCategories = require("./routes/adminCategories");
 const adminProducts = require("./routes/adminProducts");
@@ -104,6 +114,7 @@ const adminProducts = require("./routes/adminProducts");
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
+app.use('/products', products);
 app.use('/', pages);
 
 //starting the server
