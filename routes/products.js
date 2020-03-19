@@ -28,12 +28,14 @@ router.get('/', (req, res) => {
  */
 router.get('/:slug', (req, res) => {
     const slug = req.params.slug;
+    const loggedIn = (req.isAuthenticated()) ? true : false;
     Category.findOne({ slug: slug }, (err, category) => {
         Product.find({ category: category.slug }, (err, products) => {
             if (err) return console.log(err);
             res.render('categoryProducts', {
                 title: category.title,
                 products: products,
+                loggedIn: loggedIn
             });
         });
     });

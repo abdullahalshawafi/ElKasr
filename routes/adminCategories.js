@@ -4,6 +4,8 @@ const isAdmin = require('../config/auth').isAdmin;
 
 //get category model
 const Category = require('../models/category');
+//get product model
+var Product = require('../models/product');
 
 /*
  * GET category index
@@ -54,6 +56,7 @@ router.get('/delete-category/:id', isAdmin, (req, res) => {
         req.flash('success', 'Category deleted!');
         res.redirect('/admin/categories');
     });
+    Product.find
 });
 
 /*
