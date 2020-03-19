@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isUser = require('../config/auth').isUser;
 
 //get product model
 const Product = require('../models/product');
@@ -46,11 +47,58 @@ router.get('/add/:product', (req, res) => {
 /*
  * GET cart checkout
  */
-router.get('/checkout', (req, res) => {
+router.get('/checkout', isUser, (req, res) => {
     res.render('checkout', {
         title: 'Checkout',
         cart: req.session.cart
     });
+});
+
+/*
+ * GET update product
+ */
+router.get('/update/:product', (req, res) => {
+    const slug = req.params.product;
+    var cart = req.session.cart;
+    const action = req.query.action;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].title === slug) {
+            switch (action) {
+                case 'add':
+                    cart[i].qty++;
+                    break;
+
+                case 'remove':
+                    if (cart[i].qty > 1) {
+                        cart[i].qty--;
+                        break;
+                    }
+
+                case 'clear':
+                    cart.splice(i, 1);
+                    if (cart.length === 0)
+                        delete req.session.cart;
+                    break;
+
+                default:
+                    console.log('Update Problem.');
+                    break;
+            }
+            break;
+        }
+    }
+    req.flash('success', 'Cart updated!');
+    res.redirect('/cart/checkout');
+});
+
+/*
+ * GET clear cart
+ */
+router.get('/clear', (req, res) => {
+    delete req.session.cart;
+    req.flash('success', 'Cart cleared!');
+    res.redirect('/cart/checkout');
 });
 
 //exports

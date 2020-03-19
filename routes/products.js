@@ -12,11 +12,13 @@ const Category = require('../models/category');
  * GET all products
  */
 router.get('/', (req, res) => {
+    const loggedIn = (req.isAuthenticated()) ? true : false;
     Product.find((err, products) => {
         if (err) return console.log(err);
         res.render('allProducts', {
             title: 'All products',
-            products: products
+            products: products,
+            loggedIn: loggedIn
         });
     });
 });
@@ -31,7 +33,7 @@ router.get('/:slug', (req, res) => {
             if (err) return console.log(err);
             res.render('categoryProducts', {
                 title: category.title,
-                products: products
+                products: products,
             });
         });
     });
@@ -42,6 +44,7 @@ router.get('/:slug', (req, res) => {
  */
 router.get('/:category/:product', (req, res) => {
     var galleryImages = null;
+    const loggedIn = (req.isAuthenticated()) ? true : false;
     const productSlug = req.params.product;
     Product.findOne({ slug: productSlug }, (err, product) => {
         if (err) return console.log(err);
@@ -52,7 +55,8 @@ router.get('/:category/:product', (req, res) => {
             res.render('product', {
                 title: product.title,
                 product: product,
-                galleryImages: galleryImages
+                galleryImages: galleryImages,
+                loggedIn: loggedIn
             });
         });
     });

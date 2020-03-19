@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isAdmin = require('../config/auth').isAdmin;
 
 //get page model
 const Page = require('../models/page');
@@ -7,7 +8,7 @@ const Page = require('../models/page');
 /*
  * GET pages index
  */
-router.get('/', (req, res) => {
+router.get('/', isAdmin, (req, res) => {
     Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {
         if (err) return console.log(err);
         res.render('admin/pages', {
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
 /*
  * GET add page
  */
-router.get('/add-page', (req, res) => {
+router.get('/add-page', isAdmin, (req, res) => {
     var title = "";
     var slug = "";
     var content = "";
@@ -34,7 +35,7 @@ router.get('/add-page', (req, res) => {
 /*
  * GET edit page
  */
-router.get('/edit-page/:id', (req, res) => {
+router.get('/edit-page/:id', isAdmin, (req, res) => {
     Page.findById(req.params.id, (err, page) => {
         if (err) return console.log(err);
         res.render('admin/edit_pages', {
@@ -49,7 +50,7 @@ router.get('/edit-page/:id', (req, res) => {
 /*
  * GET delete pages
  */
-router.get('/delete-page/:id', (req, res) => {
+router.get('/delete-page/:id', isAdmin, (req, res) => {
     Page.findByIdAndRemove(req.params.id, (err) => {
         if (err) return console.log(err);
         Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {

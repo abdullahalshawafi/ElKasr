@@ -9,7 +9,11 @@
     <div class="col-xs-12 col-md-6">
         <p><%- product.description %></p>
         <p><%- parseFloat(product.price).toFixed(2) %> EGP</p>
+        <% if (loggedIn) { %>
         <a href="/cart/add/<%= product.slug %>">Add to cart</a>
+        <% } else { %>
+        <p>You must be logged in to purches products.</p>
+        <% } %>
     </div>
     <div class="col-xs-12">
         <ul class="gallery">
