@@ -39,7 +39,8 @@ router.get('/logout', (req, res) => {
  * POST register
  */
 router.post('/register', (req, res) => {
-    const name = req.body.name;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
@@ -47,7 +48,8 @@ router.post('/register', (req, res) => {
     const address = req.body.address;
     const phone = req.body.phone;
 
-    req.checkBody('name', 'You must enter a name.').notEmpty();
+    req.checkBody('firstname', 'You must enter your first name.').notEmpty();
+    req.checkBody('lastname', 'You must enter your last name.').notEmpty();
     req.checkBody('email', 'You must enter a valid email.').isEmail();
     req.checkBody('username', 'You must enter a username.').notEmpty();
     req.checkBody('password', 'You must enter a password.').notEmpty();
@@ -71,7 +73,8 @@ router.post('/register', (req, res) => {
                 res.redirect('/usres/register');
             } else {
                 const user = new User({
-                    name: name,
+                    firstname: firstname,
+                    lastname: lastname,
                     email: email,
                     username: username,
                     password: password,

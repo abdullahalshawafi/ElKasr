@@ -12,7 +12,10 @@
         <h5><%= parseFloat(product.price).toFixed(2) %> EGP</h5>
         <a href="/products/<%= product.category %>/<%= product.slug %>" class="vd">View details</a><br>
         <% if (loggedIn) { %>
-        <a href="/cart/add/<%= product.slug %>">Add to cart</a>
+        <a href="/cart/add/<%= product.slug %>">Add to cart</a><br>
+        <a href="/cart/add/<%= product.slug %>">+</a>&nbsp;
+        <a href="/cart/remove/<%= product.title %>">-</a>&nbsp;
+        <a href="/cart/clear/<%= product.title %>">Clear</a>&nbsp;
         <% } else { %>
         <p>You must be logged in to purches products.</p>
         <% } %>

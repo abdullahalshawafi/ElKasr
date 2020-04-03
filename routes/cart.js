@@ -45,6 +45,44 @@ router.get('/add/:product', (req, res) => {
 });
 
 /*
+ * GET remove product from cart
+ */
+router.get('/remove/:product', (req, res) => {
+    const slug = req.params.product;
+    var cart = req.session.cart;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].title === slug) {
+            if (cart[i].qty > 1) {
+                cart[i].qty--;
+            }
+            break;
+        }
+    }
+    req.flash('success', 'Product removed!');
+    res.redirect('back');
+});
+
+/*
+ * GET clear product from cart
+ */
+router.get('/clear/:product', (req, res) => {
+    const slug = req.params.product;
+    var cart = req.session.cart;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].title === slug) {
+            cart.splice(i, 1);
+            if (cart.length === 0)
+                delete req.session.cart;
+            break;
+        }
+    }
+    req.flash('success', 'Product cleared!');
+    res.redirect('back');
+});
+
+/*
  * GET cart checkout
  */
 router.get('/checkout', isUser, (req, res) => {

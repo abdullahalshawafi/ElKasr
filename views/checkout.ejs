@@ -2,7 +2,7 @@
 <h2 class="page-title">My Cart</h2>
 <br><br>
 <% if (typeof cart !== "undefined") { %>
-<table class="table table-striped algin-middle">
+<table class="table table-striped align-middle">
     <tr>
         <th>Image</th>
         <th>Title</th>
@@ -15,7 +15,7 @@
     <% cart.forEach( product => { %>
     <% var Subtotal = parseFloat(product.price * product.qty).toFixed(2); %>
     <% Total += +Subtotal; %>
-    <tr>
+    <tr class="center-text">
         <td>
             <img src="<%= product.image %>" alt="" class="cpi">
         </td>

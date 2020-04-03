@@ -35,8 +35,16 @@ img.cpi {
     width: 100px;
 }
 
-table.algin-middle td {
+table.align-middle td {
     vertical-align: middle !important;
+}
+
+table.align-middle th {
+    text-align: center;
+}
+
+tr.center-text td {
+    text-align: center;
 }
 
 .alert-error {
