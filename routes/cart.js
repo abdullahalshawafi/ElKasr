@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const nodemailer = require("nodemailer");
 const isUser = require('../config/auth').isUser;
 
 //get product model
@@ -50,13 +51,14 @@ router.get('/add/:product', (req, res) => {
 router.get('/remove/:product', (req, res) => {
     const slug = req.params.product;
     var cart = req.session.cart;
-
-    for (let i = 0; i < cart.length; i++) {
-        if (cart[i].title === slug) {
-            if (cart[i].qty > 1) {
-                cart[i].qty--;
+    if (cart) {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].title === slug) {
+                if (cart[i].qty > 1) {
+                    cart[i].qty--;
+                }
+                break;
             }
-            break;
         }
     }
     req.flash('success', 'Product removed!');
@@ -69,13 +71,14 @@ router.get('/remove/:product', (req, res) => {
 router.get('/clear/:product', (req, res) => {
     const slug = req.params.product;
     var cart = req.session.cart;
-
-    for (let i = 0; i < cart.length; i++) {
-        if (cart[i].title === slug) {
-            cart.splice(i, 1);
-            if (cart.length === 0)
-                delete req.session.cart;
-            break;
+    if (cart) {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].title === slug) {
+                cart.splice(i, 1);
+                if (cart.length === 0)
+                    delete req.session.cart;
+                break;
+            }
         }
     }
     req.flash('success', 'Product cleared!');
@@ -137,6 +140,40 @@ router.get('/clear', (req, res) => {
     delete req.session.cart;
     req.flash('success', 'Cart cleared!');
     res.redirect('/cart/checkout');
+});
+
+/*
+ * GET purchase
+ */
+router.get('/purchase', (req, res) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        secure: false,
+        port: 25,
+        auth: {
+            user: 'abdullahadel.aam@gmail.com',
+            pass: 'psxcuferazfzztsl',
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    const HelperOtions = {
+        from: '"Abdullah Adel"<abdullahadel.aam@gmail.com>',
+        to: req.user.email,
+        subject: 'New purchase from El Kasr',
+        text: req.user.firstname + ' ' + req.user.lastname + ' has purchased the following:\n'
+    }
+
+    transporter.sendMail(HelperOtions, (err, info) => {
+        if (err) return console.log(err);
+        delete req.session.cart;
+        console.log(info);
+        req.flash('success', 'Purchase Done!');
+        res.redirect('/');
+    });
+
 });
 
 //exports
