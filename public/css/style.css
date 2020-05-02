@@ -1,3 +1,11 @@
+.search {
+    justify-content: center;
+}
+
+.search-input{
+    width: 30% !important;
+}
+
 img.pimage {
     width: 150px;
 }
@@ -53,3 +61,8 @@ tr.center-text td {
     border-color: #f5c6cb;
 }
 
+@media (max-width: 767px) {
+    .products {
+        text-align: center;
+    }
+}

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
 const isUser = require('../config/auth').isUser;
 
 //get product model
@@ -142,38 +143,52 @@ router.get('/clear', (req, res) => {
     res.redirect('/cart/checkout');
 });
 
-/*
- * GET purchase
- */
+// /*
+//  * GET purchase
+//  */
 router.get('/purchase', (req, res) => {
+    // const user = req.user;
+    // const cart = req.session.cart;
+
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         secure: false,
         port: 25,
         auth: {
-            user: 'abdullahadel.aam@gmail.com',
-            pass: 'psxcuferazfzztsl',
+            user: 'elkasrdental.co@gmail.com',
+            pass: 'dentalelkasr522020'
         },
         tls: {
             rejectUnauthorized: false
         }
     });
 
+    const handlebarOptions = {
+        viewEngine: {
+            extName: '.hbs',
+            partialsDir: './views/partials',
+            layoutsDir: './views/layouts',
+            defaultLayout: '',
+        },
+        viewPath: './views/partials',
+        extName: '.hbs',
+    };
+
+    transporter.use('compile', hbs(handlebarOptions));
+
     const HelperOtions = {
-        from: '"Abdullah Adel"<abdullahadel.aam@gmail.com>',
-        to: req.user.email,
-        subject: 'New purchase from El Kasr',
-        text: req.user.firstname + ' ' + req.user.lastname + ' has purchased the following:\n'
+        from: '"El Kasr"<elkasrdental.co@gmail.com>',
+        to: 'elkasrdental.co@gmail.com',
+        subject: 'New purchase from Dr. ' + req.user.firstname + ' ' + req.user.lastname,
+        template: 'Purchase'
     }
 
     transporter.sendMail(HelperOtions, (err, info) => {
         if (err) return console.log(err);
         delete req.session.cart;
-        console.log(info);
         req.flash('success', 'Purchase Done!');
-        res.redirect('/');
+        res.redirect('/cart/checkout');
     });
-
 });
 
 //exports

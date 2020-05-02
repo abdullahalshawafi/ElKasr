@@ -30,6 +30,7 @@ router.get('/login', (req, res) => {
  * GET logout
  */
 router.get('/logout', (req, res) => {
+    delete req.session.cart;
     req.logOut();
     req.flash('success', 'You are logged out');
     res.redirect('/users/login');
