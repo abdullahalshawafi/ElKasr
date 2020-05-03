@@ -17,19 +17,19 @@
     </thead>
 
     <tbody>
-        <% products.forEach( product => { %>
+        <% for(let i = products.length - 1; i >= 0; i--){ %>
         <tr>
-            <td><%= product.title %></td>
-            <td><%= parseFloat(product.price).toFixed(2) %> EGP</td>
-            <td><%= product.category %></td>
+            <td><%= products[i].title %></td>
+            <td><%= parseFloat(products[i].price).toFixed(2) %> EGP</td>
+            <td><%= products[i].category %></td>
             <td>
-                <img src="/products images/<%= product._id %>/<%= product.image %>" alt="Product image not found"
-                    width="100px">
+                <img src="/products images/<%= products[i]._id %>/<%= products[i].image %>"
+                    alt="Product image not found" width="100px">
             </td>
-            <td><a href="/admin/products/edit-product/<%= product._id %>">Edit</a></td>
-            <td><a class="confirmDeletion" href="/admin/products/delete-product/<%= product._id %>">Delete</a></td>
+            <td><a href="/admin/products/edit-product/<%= products[i]._id %>">Edit</a></td>
+            <td><a class="confirmDeletion" href="/admin/products/delete-product/<%= products[i]._id %>">Delete</a></td>
         </tr>
-        <% }); %>
+        <% } %>
     </tbody>
 </table>
 <% } else { %>

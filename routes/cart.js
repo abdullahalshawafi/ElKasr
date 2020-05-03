@@ -180,7 +180,13 @@ router.get('/purchase', (req, res) => {
         from: '"El Kasr"<elkasrdental.co@gmail.com>',
         to: 'elkasrdental.co@gmail.com',
         subject: 'New purchase from Dr. ' + req.user.firstname + ' ' + req.user.lastname,
-        template: 'Purchase'
+        template: 'Purchase',
+        context: {
+            name: req.user.firstname + ' ' + req.user.lastname,
+            phone: req.user.phone,
+            address: req.user.address,
+            cart: req.session.cart
+        }
     }
 
     transporter.sendMail(HelperOtions, (err, info) => {

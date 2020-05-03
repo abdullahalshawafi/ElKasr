@@ -3,24 +3,24 @@
 
 <div class="row products">
     <% if (products.length) { %>
-    <% products.forEach(product => { %>
+    <% for(let i = products.length - 1; i >= 0; i--) { %>
     <div class="col-xs-12 col-md-4 p">
-        <a href="/products/<%= product.category %>/<%= product.slug %>" class="pa">
-            <img src="/products images/<%= product.id %>/<%= product.image %>" class="pimage">
+        <a href="/products/<%= products[i].category %>/<%= products[i].slug %>" class="pa">
+            <img src="/products images/<%= products[i].id %>/<%= products[i].image %>" class="pimage">
         </a>
-        <h4><%= product.title %></h4>
-        <h5><%= parseFloat(product.price).toFixed(2) %> EGP</h5>
-        <a href="/products/<%= product.category %>/<%= product.slug %>" class="vd">View details</a><br>
+        <h4><%= products[i].title %></h4>
+        <h5><%= parseFloat(products[i].price).toFixed(2) %> EGP</h5>
+        <a href="/products/<%= products[i].category %>/<%= products[i].slug %>" class="vd">View details</a><br>
         <% if (loggedIn) { %>
-        <a href="/cart/add/<%= product.slug %>">Add to cart</a><br>
-        <a href="/cart/add/<%= product.slug %>">+</a>&nbsp;
-        <a href="/cart/remove/<%= product.title %>">-</a>&nbsp;
-        <a href="/cart/clear/<%= product.title %>">Clear</a>&nbsp;
+        <a href="/cart/add/<%= products[i].slug %>">Add to cart</a><br>
+        <a href="/cart/add/<%= products[i].slug %>">+</a>&nbsp;
+        <a href="/cart/remove/<%= products[i].title %>">-</a>&nbsp;
+        <a href="/cart/clear/<%= products[i].title %>">Clear</a>&nbsp;
         <% } else { %>
         <p>You must be logged in to purches products.</p>
         <% } %>
     </div>
-    <% }); %>
+    <% } %>
 
     <% } else { %>
     <div class="col-xs-12 col-md-12">

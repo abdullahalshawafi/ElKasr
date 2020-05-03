@@ -8,7 +8,16 @@
 </head>
 
 <body>
-    <h1>Hi</h1>
+    <div>
+        <h1>Hi Dr. Ahmed Gamal,<br>There is a new purchase from Dr. {{name}}</h1>
+        <p>Dr. {{name}} has purchased the following:</p>
+        <ul>
+            {{#each cart}}
+            <li>Product: {{title}}, quantity: {{qty}}, price: {{price}}</li>
+            {{/each}}
+        </ul>
+        <p>Contact: {{phone}}<br>Address: {{address}}</p>
+    </div>
 </body>
 
 </html>
