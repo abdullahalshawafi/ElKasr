@@ -147,8 +147,11 @@ router.get('/clear', (req, res) => {
 //  * GET purchase
 //  */
 router.get('/purchase', (req, res) => {
-    // const user = req.user;
-    // const cart = req.session.cart;
+    const cart = req.session.cart;
+    let TotalPrice = 0;
+    cart.forEach(product => {
+        TotalPrice += parseFloat(product.price * product.qty).toFixed(2);
+    });
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -156,7 +159,7 @@ router.get('/purchase', (req, res) => {
         port: 25,
         auth: {
             user: 'elkasrdental.co@gmail.com',
-            pass: 'dentalelkasr522020'
+            pass: 'Wskvwid02841'
         },
         tls: {
             rejectUnauthorized: false
@@ -185,7 +188,8 @@ router.get('/purchase', (req, res) => {
             name: req.user.firstname + ' ' + req.user.lastname,
             phone: req.user.phone,
             address: req.user.address,
-            cart: req.session.cart
+            cart: req.session.cart,
+            total: TotalPrice
         }
     }
 

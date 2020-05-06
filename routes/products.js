@@ -24,20 +24,46 @@ router.get('/', (req, res) => {
 });
 
 /*
+ * POST a product by search
+ */
+router.post('/search', (req, res) => {
+    const loggedIn = (req.isAuthenticated()) ? true : false;
+    const search = req.body.Search.replace(/\s+/g, '-').toLowerCase();
+    if (search == "")
+        res.redirect("back");
+
+    Product.find((err, products) => {
+        if (err) return console.log(err);
+        res.render('ProductsBySearch', {
+            title: 'products',
+            user: req.user,
+            products: products,
+            search: search,
+            loggedIn: loggedIn
+        })
+    });
+});
+
+/*
  * GET a product by category
  */
 router.get('/:slug', (req, res) => {
     const slug = req.params.slug;
     const loggedIn = (req.isAuthenticated()) ? true : false;
     Category.findOne({ slug: slug }, (err, category) => {
-        Product.find({ category: category.slug }, (err, products) => {
-            if (err) return console.log(err);
-            res.render('categoryProducts', {
-                title: category.title,
-                products: products,
-                loggedIn: loggedIn
+        if (err) return console.log(err);
+        if (category) {
+            Product.find({ category: category.slug }, (err, products) => {
+                if (err) return console.log(err);
+                res.render('categoryProducts', {
+                    title: category.title,
+                    products: products,
+                    loggedIn: loggedIn
+                });
             });
-        });
+        }
+        else
+            res.redirect('/products');
     });
 });
 

@@ -100,15 +100,17 @@
     </nav>
 
     <% if ( title.includes("products") ) { %>
-    <form class="search form-inline my-2 my-lg-0">
-        <input class="search-input form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <form class="search form-inline my-2 my-lg-0" method="POST" action="/products/search">
+        <input class="search-input form-control mr-sm-2" name="Search" type="text" autocomplete="off" autofocus
+            placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
     </form>
     <% } else { %>
     <% categories.forEach(category => { %>
     <% if ( title.includes(category.title) ) { %>
-    <form class="search form-inline my-2 my-lg-0">
-        <input class="search-input form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <form class="search form-inline my-2 my-lg-0" method="POST" action="/products/search">
+        <input class="search-input form-control mr-sm-2" name="Search" type="text" autocomplete="off" autofocus
+            placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
     </form>
     <% } %>
