@@ -4,7 +4,7 @@
   "description": "E-commerce website for selling dental products and tools to dentists and clinics.",
   "main": "app.js",
   "scripts": {
-    "dev": "npx nodemon app.js"
+    "start": "npx nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -30,8 +30,7 @@
     "express-validator": "^5.3.0",
     "fs-extra": "^8.1.0",
     "handlebars": "^4.7.6",
-    "minimist": "^1.2.5",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "mongoose": "^5.9.3",
     "nodemailer": "^6.4.6",
     "nodemailer-express-handlebars": "^4.0.0",

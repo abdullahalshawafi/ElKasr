@@ -42,7 +42,7 @@ Page.find({}).sort({ sorting: 1 }).exec((err, pages) => {
 const Category = require('./models/category');
 
 //get all categories
-Category.find((err, categories) => {
+Category.find({}, (err, categories) => {
     if (err) return console.log(err);
     app.locals.categories = categories;
 });

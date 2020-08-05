@@ -41,8 +41,12 @@ router.get('/add/:product', (req, res) => {
                 });
             }
         }
-        req.flash('success', 'Product added!');
-        res.redirect('back');
+        // req.flash('success', 'Product added!');
+        // res.redirect('back');
+
+        res.json({
+            cart: req.session.cart
+        });
     });
 });
 
