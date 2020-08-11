@@ -1,2 +1,2 @@
-# MFC Store
+# ElKAsr
 E-commerce website for selling dental products and tools.
